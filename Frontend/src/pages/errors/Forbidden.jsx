@@ -5,7 +5,7 @@ import { useAuth } from "../../context/AuthContext";
 export default function Forbidden() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isAuthenticated, homeRoute } = useAuth();
+  const { isAuthenticated, homeRoute, logout, roleLabel } = useAuth();
   const attempted = location.state?.attempted;
 
   return (
@@ -17,9 +17,22 @@ export default function Forbidden() {
         You do not have permission to access this resource{attempted ? ` (${attempted})` : ""}. This attempt has been
         recorded in the system audit log.
       </p>
-      <button className="btn btn-primary" onClick={() => navigate(isAuthenticated ? homeRoute : "/login")}>
-        Return to {isAuthenticated ? "Dashboard" : "Login"}
-      </button>
+      <div className="flex items-center justify-center gap-2">
+        <button className="btn btn-primary" onClick={() => navigate(isAuthenticated ? homeRoute : "/login")}>
+          Return to {isAuthenticated ? `${roleLabel} Dashboard` : "Login"}
+        </button>
+        {isAuthenticated && (
+          <button
+            className="btn btn-secondary"
+            onClick={() => {
+              logout();
+              navigate("/login", { replace: true });
+            }}
+          >
+            Switch Account
+          </button>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   ShieldCheck, Mail, Lock, Eye, EyeOff, AlertCircle, CheckCircle2, Loader2,
   Fingerprint, GitBranch, ScanEye,
@@ -11,13 +11,12 @@ const DEMO_ACCOUNTS = [
   { email: "investigator@example.com", role: "Investigation Officer", name: "Aditi Sharma" },
   { email: "forensic@example.com", role: "Forensic Officer", name: "Dr. Rakesh Verma" },
   { email: "court@example.com", role: "Court Justice", name: "Justice Meera Krishnan" },
-  { email: "admin@example.com", role: "Administrator", name: "Sanjeev Gupta" },
+  { email: "admin@example.com", role: "Administrator", name: "Arnav Sharma" },
 ];
 
 export default function Login() {
   const { login, loading, error, clearError, homeRoute, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,7 +36,7 @@ export default function Login() {
     try {
       const loggedInUser = await login(email, password);
       setSuccess(true);
-      const target = location.state?.from || ROLE_HOME[loggedInUser.role] || homeRoute;
+      const target = ROLE_HOME[loggedInUser.role] || homeRoute;
       window.setTimeout(() => {
         navigate(target, { replace: true });
       }, 600);

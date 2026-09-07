@@ -58,7 +58,7 @@ export const USERS = [
   {
     id: "USR-004",
     employeeId: "AD-0001",
-    name: "Sanjeev Gupta",
+    name: "Arnav Sharma",
     email: "admin@example.com",
     role: ROLES.ADMIN,
     department: "System Administration",
