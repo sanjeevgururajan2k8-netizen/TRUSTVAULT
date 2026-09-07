@@ -1,0 +1,161 @@
+/* ============================================================
+   TrustVault — Design Tokens
+   Light mode is the default palette; dark mode overrides below.
+   ============================================================ */
+
+:root {
+  color-scheme: light;
+
+  /* ---- Brand ---- */
+  --navy-950: #060c1a;
+  --navy-900: #0a1730;
+  --navy-800: #0f2044;
+  --navy-700: #16305e;
+  --navy-600: #1e3f7a;
+  --navy-500: #2a52a3;
+
+  /* ---- Neutrals ---- */
+  --slate-50: #f6f8fb;
+  --slate-100: #eef1f6;
+  --slate-200: #e2e7ef;
+  --slate-300: #cbd4e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+
+  /* ---- Accents ---- */
+  --accent-blue: #2563eb;
+  --accent-blue-dark: #1d4ed8;
+  --accent-teal: #0d9488;
+  --accent-cyan: #0891b2;
+
+  /* ---- Status ---- */
+  --status-green: #15803d;
+  --status-green-bg: #e7f7ed;
+  --status-green-border: #bbe8c9;
+  --status-amber: #b45309;
+  --status-amber-bg: #fdf3dd;
+  --status-amber-border: #f4dea3;
+  --status-red: #b91c1c;
+  --status-red-bg: #fdeceb;
+  --status-red-border: #f5c2bd;
+  --status-blue: #1d4ed8;
+  --status-blue-bg: #e9f0fe;
+  --status-blue-border: #bdd3fb;
+  --status-gray: #475569;
+  --status-gray-bg: #eef1f6;
+  --status-gray-border: #dbe1ea;
+
+  /* ---- Surfaces ---- */
+  --bg-app: #eef1f6;
+  --bg-canvas: #f6f8fb;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-sunken: #f2f5f9;
+  --surface-overlay: rgba(15, 23, 42, 0.55);
+  --border-subtle: #e6eaf1;
+  --border-default: #dbe1ea;
+  --border-strong: #c3cddc;
+
+  /* ---- Text ---- */
+  --text-primary: #0f172a;
+  --text-secondary: #43536b;
+  --text-muted: #6b7891;
+  --text-inverse: #f6f8fb;
+  --text-on-navy: #eaf0fb;
+  --text-link: #1d4ed8;
+
+  /* ---- Sidebar (always dark-navy identity, both themes) ---- */
+  --sidebar-bg: var(--navy-950);
+  --sidebar-bg-alt: #0a1424;
+  --sidebar-border: rgba(255, 255, 255, 0.07);
+  --sidebar-text: #b9c6de;
+  --sidebar-text-muted: #7286a8;
+  --sidebar-active-bg: rgba(37, 99, 235, 0.22);
+  --sidebar-active-text: #ffffff;
+  --sidebar-active-bar: #3b82f6;
+
+  /* ---- Elevation ---- */
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.09), 0 2px 4px rgba(15, 23, 42, 0.06);
+  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.14), 0 4px 10px rgba(15, 23, 42, 0.08);
+  --shadow-focus: 0 0 0 3px rgba(37, 99, 235, 0.35);
+
+  /* ---- Shape ---- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 999px;
+
+  /* ---- Overlay image treatment (light) ---- */
+  --board-overlay-strong: linear-gradient(135deg, rgba(6, 12, 26, 0.88) 0%, rgba(10, 23, 48, 0.82) 45%, rgba(15, 32, 68, 0.86) 100%);
+  --board-overlay-soft: linear-gradient(180deg, rgba(246, 248, 251, 0.94) 0%, rgba(238, 241, 246, 0.96) 100%);
+
+  --font-sans: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "Consolas", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg-app: #070d1a;
+  --bg-canvas: #0a1120;
+  --surface: #111a2d;
+  --surface-raised: #141f36;
+  --surface-sunken: #0c1424;
+  --surface-overlay: rgba(3, 7, 15, 0.72);
+  --border-subtle: #1d2942;
+  --border-default: #263352;
+  --border-strong: #35456b;
+
+  --text-primary: #eef2f9;
+  --text-secondary: #b7c2d6;
+  --text-muted: #8695b3;
+  --text-inverse: #0f172a;
+  --text-on-navy: #eaf0fb;
+  --text-link: #6ea1ff;
+
+  --status-green: #4ade80;
+  --status-green-bg: rgba(74, 222, 128, 0.14);
+  --status-green-border: rgba(74, 222, 128, 0.32);
+  --status-amber: #fbbf24;
+  --status-amber-bg: rgba(251, 191, 36, 0.14);
+  --status-amber-border: rgba(251, 191, 36, 0.32);
+  --status-red: #f87171;
+  --status-red-bg: rgba(248, 113, 113, 0.16);
+  --status-red-border: rgba(248, 113, 113, 0.36);
+  --status-blue: #60a5fa;
+  --status-blue-bg: rgba(96, 165, 250, 0.16);
+  --status-blue-border: rgba(96, 165, 250, 0.34);
+  --status-gray: #9fb0cc;
+  --status-gray-bg: rgba(159, 176, 204, 0.14);
+  --status-gray-border: rgba(159, 176, 204, 0.3);
+
+  --sidebar-bg: #050a16;
+  --sidebar-bg-alt: #030710;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-text: #a9b8d6;
+  --sidebar-text-muted: #64769c;
+  --sidebar-active-bg: rgba(59, 130, 246, 0.24);
+  --sidebar-active-text: #ffffff;
+  --sidebar-active-bar: #60a5fa;
+
+  --accent-blue: #4f8bff;
+  --accent-blue-dark: #3b73e0;
+  --accent-teal: #2dd4bf;
+  --accent-cyan: #22d3ee;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 18px 40px rgba(0, 0, 0, 0.55), 0 6px 14px rgba(0, 0, 0, 0.35);
+  --shadow-focus: 0 0 0 3px rgba(79, 139, 255, 0.4);
+
+  --board-overlay-strong: linear-gradient(135deg, rgba(2, 5, 12, 0.93) 0%, rgba(5, 11, 24, 0.9) 45%, rgba(8, 16, 34, 0.92) 100%);
+  --board-overlay-soft: linear-gradient(180deg, rgba(7, 13, 26, 0.93) 0%, rgba(10, 17, 32, 0.96) 100%);
+}
