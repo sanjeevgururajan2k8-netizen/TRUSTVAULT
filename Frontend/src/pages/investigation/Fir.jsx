@@ -4,6 +4,7 @@ import { getCasesForUser, getFirByCase } from "../../data/api";
 import DocumentCard from "../../components/domain/DocumentCard";
 import EmptyState from "../../components/ui/EmptyState";
 import { FileText } from "lucide-react";
+import { generateFirDocument } from "../../utils/documentGenerator";
 
 export default function InvestigationFir() {
   const { user } = useAuth();
@@ -32,7 +33,10 @@ export default function InvestigationFir() {
               fileName={fir.documentName}
               date={fir.filedDate}
               onView={() => toast.info("Opening secure document preview…")}
-              onDownload={() => toast.success("Download started", fir.documentName)}
+              onDownload={() => {
+                generateFirDocument(fir, caseObj);
+                toast.success("Download started", fir.documentName);
+              }}
               onReplace={() => toast.info("Replace document flow would open a file picker here.")}
             />
           ))}
