@@ -9,6 +9,45 @@ import {
 } from "./mockData";
 import { nextCaseId, nextEvidenceId, simulateSha256 } from "../utils/helpers";
 
+// ---------------------------------------------------------------------------
+// localStorage persistence helpers
+// Keeps mutation state (court submissions, new cases, etc.) across page
+// refreshes so the prototype workflow feels real end-to-end.
+// ---------------------------------------------------------------------------
+const LS_COURT_KEY = "tv_court_submissions";
+
+/** Load previously submitted case IDs from localStorage and patch CASES. */
+(function hydrateCourtSubmissions() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(LS_COURT_KEY) || "[]");
+    saved.forEach(({ caseId, courtSubmissionDate }) => {
+      const c = CASES.find((x) => x.id === caseId);
+      if (c) {
+        c.submittedToCourt = true;
+        c.status = "Submitted to Court";
+        c.courtSubmissionDate = courtSubmissionDate;
+        c.progress.courtSubmission = true;
+        c.lastUpdated = courtSubmissionDate;
+      }
+    });
+  } catch (_) {
+    // Ignore corrupt localStorage data.
+  }
+})();
+
+/** Persist a court submission entry so it survives page refresh. */
+function persistCourtSubmission(caseId, courtSubmissionDate) {
+  try {
+    const existing = JSON.parse(localStorage.getItem(LS_COURT_KEY) || "[]");
+    if (!existing.find((e) => e.caseId === caseId)) {
+      existing.push({ caseId, courtSubmissionDate });
+      localStorage.setItem(LS_COURT_KEY, JSON.stringify(existing));
+    }
+  } catch (_) {
+    // Ignore storage errors in prototype.
+  }
+}
+
 export function getCasesForUser(user) {
   if (!user) return [];
   if (user.role === ROLES.INVESTIGATOR) {
@@ -363,6 +402,8 @@ export function submitCaseToCourt(caseId, user) {
   c.courtSubmissionDate = now;
   c.progress.courtSubmission = true;
   c.lastUpdated = now;
+  // Persist so the submitted state survives a page refresh.
+  persistCourtSubmission(caseId, now);
   logAudit(user.name, user.role, "Case Submitted to Court", caseId);
   return c;
 }

@@ -18,9 +18,15 @@ export default function FinalCasePrep() {
   const navigate = useNavigate();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [tick, setTick] = useState(0);
 
   const caseObj = getCaseById(id);
+
+  // Track submission status in local state so the UI updates correctly after
+  // the user clicks "Confirm Submission". Initialise from the (already
+  // hydrated) mock store so a page-refresh also shows the correct state.
+  const [isSubmitted, setIsSubmitted] = useState(!!caseObj?.submittedToCourt);
+  const [submissionDate, setSubmissionDate] = useState(caseObj?.courtSubmissionDate ?? null);
+
   if (!caseObj) return <NotFound />;
 
   const fir = getFirByCase(id);
@@ -42,21 +48,24 @@ export default function FinalCasePrep() {
   const doneCount = checklist.filter((c) => c.done).length;
   const pct = Math.round((doneCount / checklist.length) * 100);
   const missing = checklist.filter((c) => !c.done);
-  const readyToSubmit = pct === 100 && !caseObj.submittedToCourt;
+  const readyToSubmit = pct === 100 && !isSubmitted;
 
   const confirmSubmit = () => {
     setSubmitting(true);
     window.setTimeout(() => {
-      submitCaseToCourt(id, user);
+      const updated = submitCaseToCourt(id, user);
       setSubmitting(false);
       setConfirmOpen(false);
+      if (updated) {
+        setIsSubmitted(true);
+        setSubmissionDate(updated.courtSubmissionDate);
+      }
       toast.success("Case submitted for judicial review", `${id} sent to the Court Justice.`);
-      setTick((t) => t + 1);
     }, 900);
   };
 
   return (
-    <div key={tick}>
+    <div>
       <div className="page-header">
         <div>
           <div className="page-eyebrow">{caseObj.id}</div>
@@ -91,7 +100,7 @@ export default function FinalCasePrep() {
               <li>Witness Statements: {witnesses.length}</li>
               <li>Evidence Items: {evidence.length}</li>
               <li>Forensic Reports: {reports.length}</li>
-              {caseObj.submittedToCourt && <li className="font-semibold" style={{ color: "var(--status-green)" }}>Submitted: {formatDate(caseObj.courtSubmissionDate)}</li>}
+              {isSubmitted && <li className="font-semibold" style={{ color: "var(--status-green)" }}>Submitted: {formatDate(submissionDate)}</li>}
             </ul>
           </div>
 
@@ -105,7 +114,7 @@ export default function FinalCasePrep() {
             >
               <PackageCheck size={15} /> Generate Case Package
             </button>
-            {caseObj.submittedToCourt ? (
+            {isSubmitted ? (
               <div className="integrity-banner ok" style={{ marginTop: 4 }}>
                 <CheckCircle2 size={18} />
                 <div>
